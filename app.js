@@ -1,56 +1,75 @@
 // Section 3: DOM Manipulation & Events
 
-// What is The DOM?
-// DOM - Document Object Model
-  // Tree of nodes/elements created by the browser
-    // any HTML tags in the document
-  // JavaScript can be used to read/write/manipulate to the DOM elements/nodes
-  // Object Oriented Representation
-    // each node has it's own properties of methods: change, remove, add,etc...
-    // The browser gives us a window object and inside of that, we have a document object
-// The document object itself has a ton of different methods and propeties attached to it.
+// DOM Selectors For Single Elements
 
-// Examining The Document Object
+// document object methods that allow us to pull things from the DOM and then we can do different things with the elements/node
+// vanilla js
 
-let val;
-
-// 
-val = document;
-val = document.all; // gives us a collection of the document
-val = document.all[0]; // gives us the first element which is most likely the html element in this case
-val = document.all.length; // shows you how many elements you have in the dom
-val = document.head; // get just the head
-val = document.body; // get just the body
-val = document.doctype; // shows you what kind of doctype
-val = document.domain; // gives the loopback address since i'm on my local host
-val = document.URL; //gives you the whole thing including protocol etc
-val = doucment.characterSet;
-val = document.contentType;
-
-val = document.forms; // get all the form elements on the page
-val = document.forms[0]; // to access a certain form
-val = document.forms[0].id; //gives us the id
-val = document.forms[0].method;
-val = document.forms[0].action;
-
-val = document.links; // returns a collection of all area and a elements with a value for the href attribute
-val = document.links[0];
-val = document.links[0].id;
-val = document.links[0].className;
-val = document.links[0].classList[0];
-
-val = document.images; // returns a collection of the images
-
-val = document.scripts; // returns a list of the script elements
-val = document.scripts[2].getAttribute('src'); // get a certain script and then you want to get the src attribute
-
-let scripts = document.scripts;
-
-let scriptsArr = Array.from(scripts);
-
-scriptsArr.forEach(function(script){
-  console.log(script.getAttribute('src'));
-});
+//single element selectors
+  // will allow you to grab a single element by its id or class, etc...
+  // stores one thing only
+  // grabs the single first one
 
 
-console.log(val);
+// multiple element selectors
+  // grabs all the elements of that class and node list
+
+
+// document.getElementById()
+// selects things by their id
+
+console.log(document.getElementById('task-title'));
+
+// Get things from the element
+
+console.log(document.getElementById('task-title').id); //get ele by id
+console.log(document.getElementById('task-title').className); // by class
+
+// // Change styling
+// document.getElementById('task-title').style.background = '#333'; // change the background to a certain color.
+// document.getElementById('task-title').style.color = '#fff'; // change to white
+// document.getElementById('task-title').style.padding = '5px'; // change padding
+// // document.getElementById('task-title').style.display = 'none'; // completely get rid of display
+// // this is to show you that you can change styles in JS but use CSS instead.
+
+// // Change content
+// // 
+// document.getElementById('task-title').textContent = 'Task List'; //change context of the list
+// document.getElementById('task-title').innerText = 'My Tasks'; // change inner contents of inner text
+// document.getElementById('task-title').innerHTML = '<span style ="color:red">Task List</span>'; // you can see that you are not changing the style inside of the span tag
+
+// it's not very efficient, so here's what we do, we set it to a variable:
+const taskTitle = document.getElementById('task-title');
+
+//Change styling
+taskTitle.style.background = '#333';
+taskTitle.style.color = '#fff';
+taskTitle.style.padding = '5px';
+// taskTitle.style.display = 'none';
+
+// Change content
+taskTitle.textContent = 'Task List';
+taskTitle.innerText = 'My Tasks';
+taskTitle.innerHTML = '<span style="color:red">Task List</span>';
+
+// document.querySelector()
+// newer and much more powerful
+// you don't have to select things by id, you can select them by... anything
+// basically works like jQuery because you can put any CSS selectors in here
+
+console.log(document.querySelector('#task-title'));
+console.log(document.querySelector('.card-title'));
+console.log(document.querySelector('h5')); // if there's more than one on the page, you're going to get the first one.
+
+// for li items
+document.querySelector('li').style.color = 'red'; // single element selector, so it only gets the first one
+document.querySelector('ul li').style.color = 'blue'; // you can also do nested elements
+document.querySelector('li:last-child').style.color = 'red'; // you can also use css pseudo code in here
+document.querySelector('li:nth-child(3)').style.color = 'yellow'; // you can also use the nth child pseudo code to select certain li items
+document.querySelector('li:nth-child(4)').textContent = 'Hello World'; // you can also change the text for that item
+document.querySelector('li:nth-child(odd)').style.background = '#ccc'; // you'll notice that only the first odd has been selected because this is a single element selector
+document.querySelector('li:nth-child(even)').style.background = '#f4f4f4'; // same thing for even, it only selects one
+
+
+
+
