@@ -1,67 +1,68 @@
 // Section 3: DOM Manipulation & Events
 
-// DOM Selectors for Multiple Elements
-// Used to select more than one element
-// Returns either a HTML collection or node list which are both similar to array, except there are certain things you can't do with normal arrays.
-// Although they can be converted to arrays very easily.
+// Traversing the DOM
+// Traverse = move up and down
+// Dealing with parents and children of specific nodes or whatever it is that we select
 
-// document.getElementsByClassName
+let val;
 
-const items = document.getElementsByClassName('collection-item'); // fetch anything with this class name
-console.log(items); // prints out the HTML collection and within it, you'll see all the different properties, ids, classes... etc
-console.log(items[0]); // get the first list item within the HTML collection
-items[0].style.color = 'red'; // we can change style by indexing them just like an array
-items[3].textContent = 'Hello World'; // we can access them just like an array and change the text
+const list = document.querySelector('ul.collection') 
 
-const listItems = document.querySelector('ul').getElementsByClassName('collection-item');
+const listItem = document.querySelector('li.collection-item:first-child');
 
-console.log(listItems);
+val = listItem;
+val = list;
 
+// Get child nodes of the ul
+// this gives us a node list of all of the child nodes
+// not just elements
+val = list.childNodes;
+val = list.childNode[0]; // get the first node
+val = list.childNodes[0].nodeName; // get the first node's nodeName
+val = list.childNodes[0].nodeType; // get the first node's nodeType
 
-// // document.getElementsByTagName
-let lis = document.getElementsByTagName('li');
-console.log(lis);
-console.log(lis[0]);
-lis[0].style.color = 'red';
-lis[3].textContent = 'Hello World';
+// These numbers pertain to what type of nodes these are
+// 1 - Element
+// 2 - Attribute (deprecated)
+// 3 - Text node
+// 8 - Comment
+// 9 - Document itself
+// 10 - Doctype
 
-// // Convert HTML Collection into an Array and use it just like an array
-lis = Array.from(lis);
+// Get children element nodes
+// this returns an HTML collection
+// gives us just by the element
+// you use children more than child, if anything.
+val = list.children;
+val = list.children[1];
+list.children[1].textContent = 'Hello';
+// Children of children
+val = list.children[3].children[0];
+val = list.children[3].children[0].id = 'test-link'; // this will add the id for you.
 
-lis.reverse();
+// First child property
+val = list.firstChild;
+val = list.firstElementChild;
 
-lis.forEach(function(li, index){
-  console.log(li.className)
-  li.textContent = `${index}: Hello`;
-});
+// Last child property
+val = list.lastChild;
+val = list.lastElementChild;
 
-console.log(lis);
+// Count child elements property
+val = list.childElementCount;
 
-// document.querySelectorAll
-// Pretty much like document.getElements and converting it into an HTML collection, except that it returns what is called a node list
-// a node list counts not just elements but things like 'text nodes'. Run a forEach without converting it to an array
+// Get parent node
+val = listItem.parentNode;
+val = listItem.parentElement;
+val  = listItem.parentElement.parentElement;
 
-const items = document.querySelectorAll('ul.collection li.collection-item');
+// Get next sibling
+val = listItem.nextSibling;
+val = listItem.nextElementSibling.nextElementSibling;
+val = listItem.nextElementSibling.previousElementSibling; // traversing up and down
 
-// we're iterating through our items variable which is a querySelectorAll and doesn't need you to convert it to an array.
-items.forEach(function(li, index) {
-  li.textContent = `${index}: Hello`;
-});
+// Get previous sibling
+val = listItem.previousSibling;
+val = listItem.previousElementSibling;
 
-// using querySelectorAll with certain css pseudo code and setting it to const
-const liOdd = document.querySelectorAll('li:nth-child(odd)');
-const liEven = document.querySelectorAll('li:nth-child(even)');
-
-// with a .forEach()
-liOdd.forEach(function(li, index) {
-  li.style.background = "#f4f4f4";
-});
-
-// with a for loop
-for (let i = 0; i < liEven.length; i++) {
-  liEven[i].style.background = "#ccc";
-}
-
-console.log(items);
-
-
+console.log(val);
