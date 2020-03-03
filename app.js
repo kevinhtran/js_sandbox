@@ -1,68 +1,42 @@
 // Section 3: DOM Manipulation & Events
 
-// Traversing the DOM
-// Traverse = move up and down
-// Dealing with parents and children of specific nodes or whatever it is that we select
+// Creating Elements
+// Create an element and then add things to it such as classes, ids, attributes.
+// Create the element and then insert it into the DOM
 
-let val;
+// Objective: Add an extra li at the bottom which includes the text and a link for the icon
 
-const list = document.querySelector('ul.collection') 
+// Constructing DOM items from scratch with vanilla js
+// Create element
+const li = document.createElement('li');
 
-const listItem = document.querySelector('li.collection-item:first-child');
+// Add class
+li.className = 'collection-item';
 
-val = listItem;
-val = list;
+// Add id
+li.id = 'new-item';
 
-// Get child nodes of the ul
-// this gives us a node list of all of the child nodes
-// not just elements
-val = list.childNodes;
-val = list.childNode[0]; // get the first node
-val = list.childNodes[0].nodeName; // get the first node's nodeName
-val = list.childNodes[0].nodeType; // get the first node's nodeType
+// Add attribute
+li.setAttribute('title', 'New Item');
 
-// These numbers pertain to what type of nodes these are
-// 1 - Element
-// 2 - Attribute (deprecated)
-// 3 - Text node
-// 8 - Comment
-// 9 - Document itself
-// 10 - Doctype
+// Create text node and append
+// appendChild just means that you just want to put something inside of something
+let newText = document.createTextNode('Hello world'); // you can just put it into a variable
+li.appendChild(newText); // and then here we append the newText into something
 
-// Get children element nodes
-// this returns an HTML collection
-// gives us just by the element
-// you use children more than child, if anything.
-val = list.children;
-val = list.children[1];
-list.children[1].textContent = 'Hello';
-// Children of children
-val = list.children[3].children[0];
-val = list.children[3].children[0].id = 'test-link'; // this will add the id for you.
+// crate new link element
+const link = document.createElement('a');
 
-// First child property
-val = list.firstChild;
-val = list.firstElementChild;
+// Add classes
+link.className = 'delete-item secondary-content';
+// Add icon HTML
+link.innerHTML = '<i class="fa fa-remove"></i>';
 
-// Last child property
-val = list.lastChild;
-val = list.lastElementChild;
+// Append link into li 
+li.appendChild(link);
 
-// Count child elements property
-val = list.childElementCount;
+// Append li as child to ul
+// this create the new li within our ul
+document.querySelector('ul.collection').appendChild(li);
 
-// Get parent node
-val = listItem.parentNode;
-val = listItem.parentElement;
-val  = listItem.parentElement.parentElement;
-
-// Get next sibling
-val = listItem.nextSibling;
-val = listItem.nextElementSibling.nextElementSibling;
-val = listItem.nextElementSibling.previousElementSibling; // traversing up and down
-
-// Get previous sibling
-val = listItem.previousSibling;
-val = listItem.previousElementSibling;
-
-console.log(val);
+console.log(li);
