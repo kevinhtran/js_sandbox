@@ -1,38 +1,48 @@
 // Section 3: DOM Manipulation & Events
 
-// Mouse Events
-
-const clearBtn = document.querySelector('.clear-tasks');
-const card = document.querySelector('.card');
+// Keyboard & Input Events
+// it's important to mention that if you have a big application with a lot of forms, you want to be more specific than just forms; use the id of the class or something.
+// in this case, we only have just one form
+const form = document.querySelector('form');
+const taskInput = document.getElementById('task');
 const heading = document.querySelector('h5');
+const select = document.querySelector('select');
 
-// Click
-// clearBtn.addEventListener('click', runEvent);
-// Doubleclick
-// clearBtn.addEventListener('dblclick', runEvent);
-// Mousedown
-// clearBtn.addEventListener('mousedown', runEvent);
-// Mouseup
-// clearBtn.addEventListener('mouseup', runEvent);
+// Clear input
+taskInput.value = ''; // you usually want this to run after you submit a form because it clears out whatever you've initially put in the form.
 
-// The difference
-// Mouseevent
-// card.addEventListener('mouseenter', runEvent);
-// // Mouseleave
-// card.addEventListener('mouseleave', runEvent);
-// // this will fire off when you go inside/outside of an element within another element
-// // Mouseover
-// card.addEventListener('mouseover', runEvent);
-// // Mouseout
-// card.addEventListener('mouseout', runEvent);
-// Mouse Move
-card.addEventListener('mousemove', runEvent); // any movement within the element. good for games and interative things
+// form.addEventListener('submit', runEvent);
 
-// Event Handler
+// // Keydown
+// taskInput.addEventListener('keydown', runEvent); // fires off when key goes down and logs it
+// // Keyup
+// taskInput.addEventListener('keyup', runEvent); // fires off when your lift your key up
+// // Keypress
+// taskInput.addEventListener('keypress', runEvent); // as soon as your press your key, it fires off
+// Focus
+// taskInput.addEventListener('focus', runEvent); // when you click inside of like... a form and you focus on that and start typing or something.
+// // Blur
+// taskInput.addEventListener('blur', runEvent); // when you click on the outside of it. opposite of focus
+// // Cut
+// taskInput.addEventListener('cut', runEvent); // cut something and it fires off the event
+// // Paste
+// taskInput.addEventListener('paste', runEvent); // paste something and it fires off the event
+// // Input
+// taskInput.addEventListener('input', runEvent); // anything we do with this input, it's going to fire off
+// Change
+select.addEventListener('change', runEvent); // fires a event type change each time something is triggered
+
+
 function runEvent(e) {
   console.log(`EVENT TYPE: ${e.type}`);
 
-  heading.textContent = `MouseX: ${e.offsetX} MouseY: ${e.offsetY}`; // these gives you exact cordinates like showing you where your characters exactly are in the game.
+  console.log(e.target.value); // target is the element that the event happens on.
+  // value is whatever we're typing in
 
-  document.body.style.backgroundColor = `rgb(${e.offsetX}, ${e.offsetY}, 40)`; // you are adding some styling to the body of your document/html and setting it equal to an rgb that changes are your move your mouse around; each cordinate setting a different color for the body.
-}
+  // heading.innerText = e.target.value;
+
+  // Get input value
+  // console.log(taskInput.value); // and usually when you submit a form, you want to get the input field/get the values
+
+  e.preventDefault(); // remember that we do this to prevent redirection from happening and usually when you use a submit on an addEventListener, you're going to want to use preventDefault
+};
