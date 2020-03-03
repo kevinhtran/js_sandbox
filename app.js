@@ -1,42 +1,61 @@
 // Section 3: DOM Manipulation & Events
 
-// Creating Elements
-// Create an element and then add things to it such as classes, ids, attributes.
-// Create the element and then insert it into the DOM
+// Removing & Replacing Elements
+// Objective: Replace and remove elements within the dom, how to work with classes, how to manipulate classes and attributes, how to get attributes in classes, how to change them, remove them, etc...
 
-// Objective: Add an extra li at the bottom which includes the text and a link for the icon
 
-// Constructing DOM items from scratch with vanilla js
-// Create element
-const li = document.createElement('li');
+// REPLACE ELEMENT
 
-// Add class
-li.className = 'collection-item';
-
+// Create Element
+const newHeading = document.createElement('h2');
 // Add id
-li.id = 'new-item';
+newHeading.id = 'task-title';
+// New Text node
+newHeading.appendChild(document.createTextNode('Task List'));
 
-// Add attribute
-li.setAttribute('title', 'New Item');
+// Get the old heading
+const oldHeading = document.getElementById('task-title');
 
-// Create text node and append
-// appendChild just means that you just want to put something inside of something
-let newText = document.createTextNode('Hello world'); // you can just put it into a variable
-li.appendChild(newText); // and then here we append the newText into something
+// Parent
+const cardAction = document.querySelector('.card-action');
 
-// crate new link element
-const link = document.createElement('a');
+// Replace
+cardAction.replaceChild(newHeading, oldHeading);
 
-// Add classes
-link.className = 'delete-item secondary-content';
-// Add icon HTML
-link.innerHTML = '<i class="fa fa-remove"></i>';
 
-// Append link into li 
-li.appendChild(link);
 
-// Append li as child to ul
-// this create the new li within our ul
-document.querySelector('ul.collection').appendChild(li);
+// REMOVE ELEMENT
+const lis = document.querySelectorAll('li');
+const list = document.querySelector('ul');
 
-console.log(li);
+// Remove list item
+lis[0].remove();
+
+// Remove child element
+list.removeChild(lis[3]);
+
+// CLASSES & ATTR
+const firstLi = document.querySelector('li:first-child');
+const link = firstLi.children[0];
+
+// Classes
+let val;
+
+val = link.className; // gives us a string of the classes
+val = link.classList; // gives us a DOM token list but its set up like an array. 
+val = link.classList[0]; // You can access them individually
+link.classList.add('test'); // add a class using classList
+link.classList.remove('test'); // remove a class using classList
+val = link;
+
+
+// Attributes
+val = link.getAttribute('href'); // get an attribute
+val = link.setAttribute('href', 'http://speedhunters.com'); // add a link to an attribute
+link.setAttribute('title', 'Speed Hunters')// add a title attribute
+val = link.hasAttribute('title'); // check to see if there is an attr; returns t/f
+link.removeAttribute('title'); // remove attribute
+val = link;
+
+
+console.log(val);
