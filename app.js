@@ -1,48 +1,54 @@
 // Section 3: DOM Manipulation & Events
 
-// Keyboard & Input Events
-// it's important to mention that if you have a big application with a lot of forms, you want to be more specific than just forms; use the id of the class or something.
-// in this case, we only have just one form
-const form = document.querySelector('form');
-const taskInput = document.getElementById('task');
-const heading = document.querySelector('h5');
-const select = document.querySelector('select');
+// Event Bubbling & Delagation
 
-// Clear input
-taskInput.value = ''; // you usually want this to run after you submit a form because it clears out whatever you've initially put in the form.
+// Event bubbling is the bubbling up of events through the DOM
+// when an event happens on a particular elements, it bubbles up through its parents
+// for instance, the event bubbles up to its parents
 
-// form.addEventListener('submit', runEvent);
+// Event delagation is almost the opposite of event bubbling
+// its where we put the listeners on one of the parent elements and then we use logic inside the event handler to target the element that we actually want that 'click' for or whatever type of event it is.
 
-// // Keydown
-// taskInput.addEventListener('keydown', runEvent); // fires off when key goes down and logs it
-// // Keyup
-// taskInput.addEventListener('keyup', runEvent); // fires off when your lift your key up
-// // Keypress
-// taskInput.addEventListener('keypress', runEvent); // as soon as your press your key, it fires off
-// Focus
-// taskInput.addEventListener('focus', runEvent); // when you click inside of like... a form and you focus on that and start typing or something.
-// // Blur
-// taskInput.addEventListener('blur', runEvent); // when you click on the outside of it. opposite of focus
-// // Cut
-// taskInput.addEventListener('cut', runEvent); // cut something and it fires off the event
-// // Paste
-// taskInput.addEventListener('paste', runEvent); // paste something and it fires off the event
-// // Input
-// taskInput.addEventListener('input', runEvent); // anything we do with this input, it's going to fire off
-// Change
-select.addEventListener('change', runEvent); // fires a event type change each time something is triggered
+// Objective: Put the event on the ul which is the parent of the li and then target the li that we want. Within each li you will see a link (<a> tag) that we are targeting and since they are all the same, we need to use event delagation
 
+// EVENT BUBBLING
 
-function runEvent(e) {
-  console.log(`EVENT TYPE: ${e.type}`);
+// document.querySelector('.card-title').addEventListener('click', function() {
+//   console.log('card title');
+// }); // grabbing the .card-title class and then adding an event listener of 'click' and have it log 'card title' which is the element that it is.
 
-  console.log(e.target.value); // target is the element that the event happens on.
-  // value is whatever we're typing in
+// document.querySelector('.card-content').addEventListener('click', function() {
+//   console.log('card content')l;
+// }); // this proves to you that it bubbles up to it's parent which is .card-content
 
-  // heading.innerText = e.target.value;
+// document.querySelector('.card').addEventListener('click', function() {
+//   console.log('card');
+// }); // this is the parent of .card-content
 
-  // Get input value
-  // console.log(taskInput.value); // and usually when you submit a form, you want to get the input field/get the values
+// document.querySelector('.col').addEventListener('click', function() {
+//   console.log('col');
+// });
 
-  e.preventDefault(); // remember that we do this to prevent redirection from happening and usually when you use a submit on an addEventListener, you're going to want to use preventDefault
+// ^ everything up top are going to be fired up when clicking on the card title because it is the child node and it's going to bubble up the DOM and call each parent node.
+
+// EVENT DELEGATION
+
+// const delItem = document.querySelector('.delete-item');
+
+// delItem.addEventListener('click', deleteItem);
+
+document.body.addEventListener('click', deleteItem);
+
+function deleteItem(e) {
+  // if (e.target.parentElement.className === 'delete-item secondary-content') {
+  //   console.log('delete item');
+  // }
+
+  if (e.target.parentElement.classList.contains('delete-item')){
+    console.log('delete-item');
+    e.target.parentElement.parentElement.remove();
+  }
 };
+
+// The whole definition of event delagation in simple terms is just putting the listener on a parent of what you're looking and then putting a condition in here to find the target using e.target and then doing the functionality.
+
