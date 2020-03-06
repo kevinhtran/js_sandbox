@@ -1,54 +1,71 @@
 // Section 3: DOM Manipulation & Events
 
-// Event Bubbling & Delagation
+// -- Local & Session Storage -- 
 
-// Event bubbling is the bubbling up of events through the DOM
-// when an event happens on a particular elements, it bubbles up through its parents
-// for instance, the event bubbles up to its parents
+// Using a local storage API that is actually part of the browser
+// What you set as a value has to be a string
+// You can still save arrays, objects and stuff but you have to turn them into a string first by using a method called JSON.stringify
+// And when you pull it out to use it, you wan to parse it back using the method JSON.parse
 
-// Event delagation is almost the opposite of event bubbling
-// its where we put the listeners on one of the parent elements and then we use logic inside the event handler to target the element that we actually want that 'click' for or whatever type of event it is.
+// local storage vs session storage
+// local storage will stay until you manually clear it out in your settings or in your program
+// session storage will leave once your browser is closed; once the session ends
+// the API is the same for both local storage and session storage
 
-// Objective: Put the event on the ul which is the parent of the li and then target the li that we want. Within each li you will see a link (<a> tag) that we are targeting and since they are all the same, we need to use event delagation
+// set local storage item
+// localStorage.setItem('name', 'John');// key of 'name' and value of 'John'
+// you can set the set data in your chrome console by going to Applications and then clicking on local storage
+// localStorage.setItem('age', '30');
 
-// EVENT BUBBLING
+// set session storage item
+// sessionStorage.setItem('name', 'Beth'); //  this will not stay after closing the browser
 
-// document.querySelector('.card-title').addEventListener('click', function() {
-//   console.log('card title');
-// }); // grabbing the .card-title class and then adding an event listener of 'click' and have it log 'card title' which is the element that it is.
+// remove from storage
+// localStorage.removeItem('name');
 
-// document.querySelector('.card-content').addEventListener('click', function() {
-//   console.log('card content')l;
-// }); // this proves to you that it bubbles up to it's parent which is .card-content
+// get from storage
+// const name = localStorage.getItem('name');
+// const age = localStorage.getItem('age');
 
-// document.querySelector('.card').addEventListener('click', function() {
-//   console.log('card');
-// }); // this is the parent of .card-content
+// clear local storage
+// localStorage.clear(); // when you clear it, you should see it as null in the console
 
-// document.querySelector('.col').addEventListener('click', function() {
-//   console.log('col');
-// });
+// console.log(name, age);
 
-// ^ everything up top are going to be fired up when clicking on the card title because it is the child node and it's going to bubble up the DOM and call each parent node.
+// if you want to add a task to the local storage
+// You will notice that this will only allow you to store one task at a time
+document.querySelector('form').addEventListener('submit', 
+function(e) {
+  const task = document.getElementById('task').value;
+  localStorage.setItem('task', task);
+  alert('Task saved.');
 
-// EVENT DELEGATION
+  e.preventDefault();
+});
 
-// const delItem = document.querySelector('.delete-item');
+// To fix this, you can create an array of task and store that as a string:
+document.querySelector('form').addEventListener('submit', function(e) {
+  const task = document.getElementById('task').value;
 
-// delItem.addEventListener('click', deleteItem);
+  let tasks;
 
-document.body.addEventListener('click', deleteItem);
-
-function deleteItem(e) {
-  // if (e.target.parentElement.className === 'delete-item secondary-content') {
-  //   console.log('delete item');
-  // }
-
-  if (e.target.parentElement.classList.contains('delete-item')){
-    console.log('delete-item');
-    e.target.parentElement.parentElement.remove();
+  if(localStorage.getItem('tasks') === null) {
+    tasks = [];
+  } else {
+    tasks = JSON.parse(localStorage.getItem('tasks'));
   }
-};
 
-// The whole definition of event delagation in simple terms is just putting the listener on a parent of what you're looking and then putting a condition in here to find the target using e.target and then doing the functionality.
+  tasks.push(task);
 
+  localStorage.setItem('tasks', JSON.stringify(tasks));
+
+  alert('Task saved');
+
+  e.preventDefault();
+});
+
+const tasks = JSON.parse(localStorage.getItem('tasks'));
+
+tasks.forEach(function(task) {
+  console.log(task);
+});
